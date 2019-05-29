@@ -1,0 +1,100 @@
+CREATE TABLE DB_DISH.APP_USER(
+    ID INT NOT NULL PRIMARY KEY,
+    SSO_ID VARCHAR(50) NOT NULL,
+    PASSWORD VARCHAR(50) NOT NULL,
+    FIRST_NAME VARCHAR(50) NOT NULL,
+    LAST_NAME VARCHAR(50) NOT NULL,
+    EMAIL VARCHAR(100) NOT NULL,
+    ENABLED BOOLEAN NOT NULL
+);
+
+
+CREATE TABLE DB_DISH.USER_PROFILE(
+    ID INT NOT null PRIMARY KEY,
+    TYPE VARCHAR(15) NOT null
+);
+
+CREATE TABLE DB_DISH.APP_USER_USER_PROFILE(
+    USER_ID INT NOT NULL,
+    USER_PROFILE_ID INT NOT null,
+    CONSTRAINT FK_USER_ID
+    FOREIGN KEY(USER_ID) REFERENCES USER_PROFILE(ID),
+    CONSTRAINT FK_APP_USER_ID
+    FOREIGN KEY(USER_PROFILE_ID) REFERENCES APP_USER(ID)
+);
+
+CREATE TABLE DB_DISH.PERSISTENT_LOGINS(
+    SERIES VARCHAR(100) NOT NULL,
+    USERNAME VARCHAR(50) NOT NULL,
+    TOKEN VARCHAR(150) NOT NULL,
+    LAST_USED DATE NOT null
+);
+
+INSERT INTO DB_DISH.user_profile
+(ID, `TYPE`)
+VALUES(0, 'USER');
+INSERT INTO DB_DISH.user_profile
+(ID, `TYPE`)
+VALUES(1, 'VISOR');
+INSERT INTO DB_DISH.user_profile
+(ID, `TYPE`)
+VALUES(2, 'ADMIN');
+
+
+INSERT INTO DB_DISH.app_user
+(ID, SSO_ID, PASSWORD, FIRST_NAME, LAST_NAME, EMAIL, ENABLED)
+VALUES(1, 'mcperalta', 'mcperalta33', 'Carmen', 'Peralta', 'peraltahernandezcarmen@gmail.com', 1);
+
+INSERT INTO DB_DISH.app_user
+(ID, SSO_ID, PASSWORD, FIRST_NAME, LAST_NAME, EMAIL, ENABLED)
+VALUES(2, 'admin', '87654321', 'Carmen Admin', 'Peralta', 'admin@gmail.com', 1);
+
+
+INSERT INTO DB_DISH.app_user_user_profile
+(USER_ID, USER_PROFILE_ID)
+VALUES(1, 1);
+
+INSERT INTO DB_DISH.app_user_user_profile
+(USER_ID, USER_PROFILE_ID)
+VALUES(2, 2);
+
+  
+
+  CREATE TABLE DB_DISH.PROJECTS(
+    ID INT NOT NULL PRIMARY KEY,
+    NAME VARCHAR(100) NOT NULL,
+    DESCRIPTION VARCHAR(250) NOT NULL,
+    PROJECT_MANAGER VARCHAR(80)
+);
+
+
+CREATE TABLE DB_DISH.DEVELOPERS_PROJECT(
+    ID_PROJECT INT NOT NULL,
+    DEVELOPER_NAME VARCHAR(100) NOT null,
+    CONSTRAINT FK_PROJECT_ID
+    FOREIGN KEY(ID_PROJECT) REFERENCES PROJECTS(ID)
+);  
+
+INSERT INTO db_dish.projects
+(ID, NAME, DESCRIPTION, PROJECT_MANAGER)
+VALUES(0, 'Sección de activacion', 'Se requiere agregar una seccion de activacion donde el usuario pueda realizar el pago via web', 'Sharon Becerra');
+
+INSERT INTO db_dish.projects
+(ID, NAME, DESCRIPTION, PROJECT_MANAGER)
+VALUES(1, 'Reporte de pagos vencidos', 'Se requiere generar un nuevo reporte de pagos vencidos donde se seleccione le periodo deseado', 'Carolina Pedraza');
+
+INSERT INTO db_dish.developers_project
+(ID, DEVELOPER_NAME)
+VALUES(1, 'Carmen Peralta');
+
+INSERT INTO db_dish.developers_project
+(ID, DEVELOPER_NAME)
+VALUES(1, 'Rodrigo Becerra');
+
+INSERT INTO db_dish.developers_project
+(ID, DEVELOPER_NAME)
+VALUES(0, 'Roberto T');
+
+INSERT INTO db_dish.developers_project
+(ID, DEVELOPER_NAME)
+VALUES(0, 'Sandra T');
